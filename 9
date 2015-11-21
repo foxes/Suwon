@@ -1,0 +1,196 @@
+A)
+
+i.     ((a b) c)
+ii.    (c)
+iii.   ((a b) c)
+iv.    ((a b) (c))
+v.     (a b c)
+vi.    ((a b c) (c b a))
+viii.  2
+ix.    f
+x.     mary
+xi.    a
+xii.   let
+
+B)
+
+i.    (first '(c d e))
+ii.   (list-tail '(1 2 c) 1 )
+iii.  (cons 'c '(e f))
+iv.   (list '(3 2) '(b c))
+v.    (cons '(bike feet) '(car bus))
+vi. 1. (car(cdr '(horse dog cat))) 
+    2. (cadr '(horse dog cat))
+
+C) 
+
+i. 
+
+(define (compare x y)
+  (> (+ x 10) (* 2 y)))
+
+> (compare 5 5)
+#t
+> (compare 10 10)
+#f
+> (compare 100 100)
+#f 
+
+ii. 
+
+(define (power-of-two n)
+    (do ((result 1 (* 2 result))
+         (exponent n (- exponent 1)))
+        ((zero? exponent) result)) )
+
+> (power-of-two 3)
+8
+> (power-of-two 0)
+1
+> (power-of-two 5)
+32
+> (power-of-two 68)
+295147905179352825856
+
+iii. 
+
+(define (num-even l)
+    (cond ((null? l) 0)
+          ((even? (car l)) (+ 1 (num-even (cdr l))))
+          (else (num-even (cdr l)))))
+
+> (num-even  '(1 2 3 4 5))
+2
+> (num-even  '(5 4 6 8 10 3 1))
+4
+> (num-even  '())
+0
+> (num-even  '(2 2 2 2 2))
+5
+
+iv. 
+
+(define (r_gcd a b)
+ (cond((= a 0) b)
+      ((= b 0) a)
+      ((= a b) a)
+      ((> a b) (r_gcd (- a b) b))
+      ((< a b) (r_gcd a (- b a)))))
+
+> (r_gcd 42 56)
+14
+> (r_gcd 12 18)
+6
+> (r_gcd 3 5) 
+1
+> (r_gcd 12 60)
+12
+> (r_gcd 12 90)         
+6
+> (r_gcd 6 80)
+2
+
+v. 
+
+(define (is-palindrome list)
+  (let middle ((last list) (end list) (mid '()))
+    (cond ((null? end)       (equal? mid last))
+          ((null? (cdr end)) (equal? mid (cdr last)))
+          (else (middle (cdr last) (cddr end)
+                         (cons (car last) mid))))))
+
+> (is-palindrome '(a b a))
+#t
+> (is-palindrome '(a b)) 
+#f
+> (is-palindrome '(a)) 
+#t
+> (is-palindrome '()) 
+#t
+
+vi. 
+
+(define intlist
+  (lambda (y)
+    (let loop ((n 1))
+      (if (<= n y)
+          (cons n (loop (+ n 1)))
+          '()))))
+
+> (intlist 8) 
+(1 2 3 4 5 6 7 8)
+> (intlist 20) 
+(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20)
+> (intlist 0) 
+()
+
+vii.
+
+(define (analyze list)
+ (cond
+  ((null? list) '())
+  ((symbol? (car list) ) (cons 'ATOM (analyze (cdr list))))
+  (else
+   (cons 'LIST (analyze (cdr list))))))
+
+> (analyze '(a b c))
+(ATOM ATOM ATOM)
+> (analyze '(a b (c d) e f))
+(ATOM ATOM LIST ATOM ATOM)
+> (analyze '(a))
+(ATOM)
+> (analyze '((a))) 
+(LIST)
+> (analyze '((a)(a)(c))) 
+(LIST LIST LIST)
+
+viii.
+
+(define (positivequad a b c)
+	(/ (+ (- b 0) (sqrt (- (* b b ) (* 4 a c)))) (* 2 a))
+)
+
+(define (negativequad a b c)
+	(/ (- ( - b 0) (sqrt (- (* b b) (* 4 a c)))) (* 2 a))
+)
+
+(define (quad-roots a b c)
+  (
+   let(
+       (i (positivequad a b c))
+       (j (negativequad a b c))
+       )
+    (if( < i j )
+	(list j i)
+	(list i j)
+	)
+	)
+)
+
+> (quad-roots 2 4 -30)
+(5 -3)
+> (quad-roots 1 3 -4)
+(4 -1)
+> (quad-roots 2 -4 -3)
+(0.5811388300841898 -2.58113883008419)
+
+ix. 
+
+(define (r_even_positions lst)
+  (if (or (null? lst)     
+          (null? (cdr lst)))   
+      '()             
+      (cons (cadr lst)
+            (r_even_positions (cddr lst)))))
+
+
+> (r_even_positions '(a b c d e))
+(b d)
+> (r_even_positions '(a)) 
+()
+> (r_even_positions '(a b)) 
+(b)
+> (r_even_positions '())  
+()
+> (r_even_positions '(a b c d e f g))
+(b d f)
